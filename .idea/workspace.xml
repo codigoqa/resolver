@@ -6,6 +6,7 @@
   <component name="ChangeListManager">
     <list default="true" id="7b0afba5-e6d8-4651-bc1e-df4fca068a61" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/org/example/Base.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/org/example/Base.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/test/java/org/example/TestClass.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/org/example/TestClass.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -61,7 +62,7 @@
       <recent name="" />
     </key>
   </component>
-  <component name="RunManager" selected="TestNG.TestClass.test1">
+  <component name="RunManager" selected="TestNG.TestClass">
     <configuration name="App" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="org.example.App" />
       <module name="resolver" />
@@ -90,7 +91,7 @@
       <module name="resolver" />
       <extension name="coverage">
         <pattern>
-          <option name="PATTERN" value="org.example.*" />
+          <option name="PATTERN" value=".*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
@@ -160,8 +161,8 @@
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="TestNG.TestClass.test1" />
         <item itemvalue="TestNG.TestClass" />
+        <item itemvalue="TestNG.TestClass.test1" />
         <item itemvalue="TestNG.TestClass.test6" />
         <item itemvalue="TestNG.TestClass.test5" />
         <item itemvalue="TestNG.TestClass.test4" />

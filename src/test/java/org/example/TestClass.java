@@ -2,12 +2,9 @@ package org.example;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.chrome.ChromeDriver;
-import org.openqa.selenium.chrome.ChromeOptions;
-import io.github.bonigarcia.wdm.WebDriverManager;
+import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
-import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
 
 import java.time.Duration;
@@ -16,22 +13,11 @@ import java.util.List;
 
 public class TestClass extends Base {
 
-
-    @BeforeTest
-    public void setUp() {
-        WebDriverManager.chromedriver().setup();
-        ChromeOptions ops = new ChromeOptions();
-        ops.addArguments("--remote-allow-origins=*");
-        driver = new ChromeDriver(ops);
-        driver.get("C:\\Users\\virgi\\Automation\\resolver\\src\\main\\prop\\QE-index.html");
-        driver.manage().window().maximize();
-
-    }
-
     @Test
     public void test1() {
 
         // Assert that both email address and password inputs are present
+
         WebElement emailInput = driver.findElement(By.id("inputEmail"));
         WebElement passwordInput = driver.findElement(By.id("inputPassword"));
         WebElement loginButton = driver.findElement(By.xpath("//button[@type='submit']"));
@@ -50,6 +36,8 @@ public class TestClass extends Base {
         emailInput.sendKeys(email);
         passwordInput.sendKeys(password);
         loginButton.click();
+
+
     }
 
     @Test
@@ -143,7 +131,7 @@ public class TestClass extends Base {
 
         String extractTableValue = returnTableValue(tableNames,2,2);
         sassert.assertEquals(extractTableValue,"Ventosanzap","The expected value not match");
-        driver.quit();
+
 
     }
 

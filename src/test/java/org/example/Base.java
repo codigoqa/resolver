@@ -7,7 +7,10 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.WebDriverWait;
+import org.testng.annotations.AfterTest;
+import org.testng.annotations.BeforeTest;
 import org.testng.asserts.SoftAssert;
 
 import java.io.FileInputStream;
@@ -19,12 +22,27 @@ import java.util.Properties;
 import java.util.Set;
 
 public class Base {
+    @BeforeTest
+    public void setUp() {
+        WebDriverManager.chromedriver().setup();
+        ChromeOptions ops = new ChromeOptions();
+        ops.addArguments("--remote-allow-origins=*");
+        driver = new ChromeDriver(ops);
+        driver.get("C:\\Users\\virgi\\Automation\\resolver\\src\\main\\prop\\QE-index.html");
+        driver.manage().window().maximize();
+    }
+
 
 
     protected   WebDriver driver = new ChromeDriver();
     protected  SoftAssert sassert = new SoftAssert();
     protected  WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(20));
     protected JavascriptExecutor jse = (JavascriptExecutor) driver;
+
+    @AfterTest
+    public void closeBrowser(){
+        driver.quit();
+    }
 
 
 }
