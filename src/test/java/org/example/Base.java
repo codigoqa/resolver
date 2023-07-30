@@ -11,6 +11,7 @@ import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.annotations.AfterTest;
 import org.testng.annotations.BeforeTest;
+import org.testng.annotations.DataProvider;
 import org.testng.asserts.SoftAssert;
 
 import java.io.FileInputStream;
@@ -32,6 +33,14 @@ public class Base {
         driver.manage().window().maximize();
     }
 
+    @DataProvider(name = "loginData")
+    public Object[][] provideLoginData() {
+        return new Object[][]{
+                {"testuser@example.com", "testpassword"},
+                // Add more test data sets as needed for additional test cases.
+        };
+    }
+
 
 
     protected   WebDriver driver = new ChromeDriver();
@@ -39,10 +48,8 @@ public class Base {
     protected  WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(20));
     protected JavascriptExecutor jse = (JavascriptExecutor) driver;
 
-    @AfterTest
-    public void closeBrowser(){
-        driver.quit();
-    }
+
+
 
 
 }

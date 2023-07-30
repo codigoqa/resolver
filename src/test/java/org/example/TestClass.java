@@ -5,6 +5,7 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
+import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
 import java.time.Duration;
@@ -13,8 +14,8 @@ import java.util.List;
 
 public class TestClass extends Base {
 
-    @Test
-    public void test1() {
+    @Test(dataProvider = "loginData")
+    public void test1(String email, String password) {
 
         // Assert that both email address and password inputs are present
 
@@ -22,15 +23,11 @@ public class TestClass extends Base {
         WebElement passwordInput = driver.findElement(By.id("inputPassword"));
         WebElement loginButton = driver.findElement(By.xpath("//button[@type='submit']"));
 
-        if (emailInput.isDisplayed() && passwordInput.isDisplayed()) {
-            System.out.println("Test Passed! Email, Password inputs, and Login button are present.");
-        } else {
-            System.out.println("Test Failed! Some elements are missing.");
-        }
 
-        // Enter an email address and password combination into the respective fields
-        String email = "testuser@example.com";
-        String password = "testpassword";
+        // Assert email password & login button
+        assert emailInput.isDisplayed() : "Test Failed! Email input is missing.";
+        assert passwordInput.isDisplayed() : "Test Failed! Password input is missing.";
+        assert loginButton.isDisplayed() :"Test Failed! Login Button not displaye" ;
 
 
         emailInput.sendKeys(email);
@@ -148,6 +145,10 @@ public class TestClass extends Base {
         }
         return TableVal[row][col];
 
+    }
+
+    public void closeBrowser(){
+        driver.quit();
     }
 }
 
