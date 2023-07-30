@@ -37,7 +37,7 @@ public class Base {
     public Object[][] provideLoginData() {
         return new Object[][]{
                 {"testuser@example.com", "testpassword"},
-                // Add more test data sets as needed for additional test cases.
+               
         };
     }
 
