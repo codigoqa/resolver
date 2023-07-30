@@ -1,36 +1,165 @@
+package org.example;
+
 import org.openqa.selenium.By;
-import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 import io.github.bonigarcia.wdm.WebDriverManager;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
+import org.testng.annotations.BeforeTest;
+import org.testng.annotations.Test;
 
-public class App {
-    private static WebDriver driver;
+import java.time.Duration;
+import java.util.ArrayList;
+import java.util.List;
 
-    public static void main(String[] args) {
-        setUp();
-        test1();
-    }
+public class TestClass extends Base {
 
-    public static void setUp() {
+
+    @BeforeTest
+    public void setUp() {
         WebDriverManager.chromedriver().setup();
         ChromeOptions ops = new ChromeOptions();
         ops.addArguments("--remote-allow-origins=*");
         driver = new ChromeDriver(ops);
-        driver.get("C:\\Users\\virgi\\Automation\\resolver\\prop\\QE-index.html");
+        driver.get("C:\\Users\\virgi\\Automation\\resolver\\src\\main\\prop\\QE-index.html");
         driver.manage().window().maximize();
-        // driver.findElement(By.id("inputEmail")).sendKeys("abc@gmail.com");
-        // password
-        // driver.findElement(By.id("inputPassword")).sendKeys("abc");
+
     }
 
-    public static void test1() {
-        //driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
-        driver.findElement(By.id("inputEmail")).sendKeys("abc@gmail.com");
-        // password
-        driver.findElement(By.id("inputPassword")).sendKeys("abc");
+    @Test
+    public void test1() {
+
+        // Assert that both email address and password inputs are present
+        WebElement emailInput = driver.findElement(By.id("inputEmail"));
+        WebElement passwordInput = driver.findElement(By.id("inputPassword"));
+        WebElement loginButton = driver.findElement(By.xpath("//button[@type='submit']"));
+
+        if (emailInput.isDisplayed() && passwordInput.isDisplayed()) {
+            System.out.println("Test Passed! Email, Password inputs, and Login button are present.");
+        } else {
+            System.out.println("Test Failed! Some elements are missing.");
+        }
+
+        // Enter an email address and password combination into the respective fields
+        String email = "testuser@example.com";
+        String password = "testpassword";
+
+
+        emailInput.sendKeys(email);
+        passwordInput.sendKeys(password);
+        loginButton.click();
+    }
+
+    @Test
+    public void test2() throws InterruptedException {
+
+        jse.executeScript("scroll(0,120);");
+        List<WebElement> test2div = driver.findElements(By.xpath("//ul[@class='list-group']//li"));
+        // Assert that there are three values in the listgroup
+        sassert.assertEquals(test2div.size(), 3, "The list does not have 3 values");
+
+        WebElement listItem = test2div.get(1);
+        String actualItem2 = listItem.getText();
+        sassert.assertTrue(actualItem2.contains("List Item 2"), "List Item 2 is not displayed");
+
+        // Assert that the second list item's value is set to "Bage 6"
+        WebElement badgeValue =driver.findElement(By.xpath("(//ul[@class='list-group']//li//span)[2]"));
+        String secondListItemValue = badgeValue.getText();
+        System.out.println("The secondList Item Value is:"+secondListItemValue);
+        sassert.assertTrue(secondListItemValue.contains("6"), "List Item 2 badge value is not 6");
+
+        sassert.assertAll();
+
+    }
+
+    @Test
+    public void test3() throws InterruptedException {
+
+        jse.executeScript("scroll(0,550);");
+
+
+        WebElement displayedOption = driver.findElement(By.xpath("//button[@id='dropdownMenuButton']"));
+        sassert.assertEquals(displayedOption.getText(), "Option 1", "Option 1 is not the default value");
+        displayedOption.click();
+        wait = new WebDriverWait(driver, Duration.ofSeconds(20));
+        wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//a[contains(text(),'Option 3')]")));
+        WebElement selectOption3 = driver.findElement(By.xpath("//a[contains(text(),'Option 3')]"));
+        selectOption3.click();
+    }
+
+    @Test
+    public  void test4() throws InterruptedException {
+
+
+        jse.executeScript("scroll(0,750);");
+
+
+
+        WebElement selectBtn = driver.findElement(By.xpath("//div[@id='test-4-div']//button[contains(@class,'btn-primary')]"));
+        sassert.assertTrue(selectBtn.isEnabled(), "Button is not enbaled");
+
+        WebElement unselectBtn = driver.findElement(By.xpath("//div[@id='test-4-div']//button[contains(@class,'btn-secondary')]"));
+        sassert.assertFalse(unselectBtn.isEnabled(), "unselect Button is not enbaled");
+
+
+    }
+
+    @Test
+    public void test5() throws InterruptedException {
+
+
+
+        jse.executeScript("scroll(0,950);");
+
+
+
+        WebElement clickBtn = driver.findElement(By.xpath("//div[@id='test-5-div']//button[contains(@class,'btn-primary')]"));
+        wait = new WebDriverWait(driver, Duration.ofSeconds(20));
+        wait.until(ExpectedConditions.elementToBeClickable(clickBtn));
+        clickBtn.click();
+        wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//div[@id='test5-alert']")));
+        WebElement message = driver.findElement(By.xpath("//div[@id='test5-alert']"));
+        sassert.assertTrue(message.isDisplayed(), "Message is not displayed");
+
+    }
+
+    @Test
+    public void test6() throws InterruptedException {
+
+
+        jse.executeScript("scroll(0,1350);");
+
+
+        List<WebElement> tableElements = driver.findElements(By.xpath("//tbody//tr//td"));
+        List<String> tableNames = new ArrayList<>();
+
+        for (int i = 0; i < tableElements.size(); i++) {
+            tableNames.add(tableElements.get(i).getText());
+        }
+
+        String extractTableValue = returnTableValue(tableNames,2,2);
+        sassert.assertEquals(extractTableValue,"Ventosanzap","The expected value not match");
+
+    }
+
+    public String returnTableValue(List<String> tableNames, int row, int col) {
+
+        String[][] TableVal = new String[3][3];
+        int k = 0;
+
+        for (int i = 0; i < TableVal.length; i++) {
+            for (int j = 0; j < 3; j++) {
+                TableVal[i][j] = tableNames.get(k);
+                k++;
+            }
+        }
+        return TableVal[row][col];
+
     }
 }
+
 
 
 
