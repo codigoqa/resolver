@@ -79,10 +79,12 @@ public class TestClass extends Base {
 
         jse.executeScript("scroll(0,550);");
 
-
+        // assert option 1 od displayed
         WebElement displayedOption = driver.findElement(By.xpath("//button[@id='dropdownMenuButton']"));
         sassert.assertEquals(displayedOption.getText(), "Option 1", "Option 1 is not the default value");
         displayedOption.click();
+
+        // click option 3
         wait = new WebDriverWait(driver, Duration.ofSeconds(20));
         wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//a[contains(text(),'Option 3')]")));
         WebElement selectOption3 = driver.findElement(By.xpath("//a[contains(text(),'Option 3')]"));
@@ -96,10 +98,10 @@ public class TestClass extends Base {
         jse.executeScript("scroll(0,750);");
 
 
-
+        // First button enbaled
         WebElement selectBtn = driver.findElement(By.xpath("//div[@id='test-4-div']//button[contains(@class,'btn-primary')]"));
         sassert.assertTrue(selectBtn.isEnabled(), "Button is not enbaled");
-
+        // Second button disabled
         WebElement unselectBtn = driver.findElement(By.xpath("//div[@id='test-4-div']//button[contains(@class,'btn-secondary')]"));
         sassert.assertFalse(unselectBtn.isEnabled(), "unselect Button is not enbaled");
 
@@ -141,6 +143,7 @@ public class TestClass extends Base {
 
         String extractTableValue = returnTableValue(tableNames,2,2);
         sassert.assertEquals(extractTableValue,"Ventosanzap","The expected value not match");
+        driver.quit();
 
     }
 
